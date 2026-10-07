@@ -5,15 +5,26 @@ and PostgreSQL (for hosted production). Implements Master Specification v4.0.
 """
 
 import os
+import shutil
 import sqlite3
 import datetime
 import json
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
 
-DATA_DIR = Path(__file__).resolve().parent.parent / "data"
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-SQLITE_DB_PATH = DATA_DIR / "thanvishos.db"
+BUNDLED_DB = Path(__file__).resolve().parent.parent / "data" / "thanvishos.db"
+
+# Serverless filesystem fallback
+try:
+    DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    SQLITE_DB_PATH = DATA_DIR / "thanvishos.db"
+except OSError:
+    DATA_DIR = Path("/tmp/thanvishos")
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    SQLITE_DB_PATH = DATA_DIR / "thanvishos.db"
+    if BUNDLED_DB.exists() and not SQLITE_DB_PATH.exists():
+        shutil.copy(BUNDLED_DB, SQLITE_DB_PATH)
 
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{SQLITE_DB_PATH}")
 
@@ -87,6 +98,13 @@ def get_connection():
     if IS_POSTGRES:
         conn = psycopg2.connect(DATABASE_URL)
         return PostgresConnectionWrapper(conn)
+
+    # If sqlite file does not exist in /tmp, copy from bundled
+    if not SQLITE_DB_PATH.exists() and BUNDLED_DB.exists():
+        try:
+            shutil.copy(BUNDLED_DB, SQLITE_DB_PATH)
+        except Exception:
+            pass
 
     conn = sqlite3.connect(str(SQLITE_DB_PATH))
     conn.row_factory = sqlite3.Row

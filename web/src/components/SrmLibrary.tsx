@@ -49,7 +49,7 @@ export default function SrmLibrary() {
     setLoading(true);
     setActiveRoadmap(null);
     try {
-      const res = await fetch("http://localhost:8000/api/library/search", {
+      const res = await fetch("/api/library/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
@@ -66,7 +66,7 @@ export default function SrmLibrary() {
   const generateRoadmap = async (topic: string, book_id?: string) => {
     setRoadmapLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/library/mastery", {
+      const res = await fetch("/api/library/mastery", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topic, hours_per_week: 10, book_id }),

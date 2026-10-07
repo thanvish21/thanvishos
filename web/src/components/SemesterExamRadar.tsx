@@ -22,7 +22,7 @@ export default function SemesterExamRadar() {
   const [exams, setExams] = useState<ExamResponse | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/exams/all")
+    fetch("/api/exams/all")
       .then(res => res.json())
       .then(data => setExams(data))
       .catch(err => console.error(err));

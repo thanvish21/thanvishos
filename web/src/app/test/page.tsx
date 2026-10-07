@@ -67,7 +67,7 @@ export default function AdaptiveTestPage() {
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
-      const res = await fetch("http://localhost:8000/api/test/evaluate", {
+      const res = await fetch("/api/test/evaluate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ answers })

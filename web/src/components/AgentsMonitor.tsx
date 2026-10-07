@@ -19,7 +19,7 @@ export default function AgentsMonitor() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/agents/telemetry")
+    fetch("/api/agents/telemetry")
       .then(res => res.json())
       .then(data => {
         setAgents(data.agents || []);

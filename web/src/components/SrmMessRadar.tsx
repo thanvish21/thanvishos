@@ -21,7 +21,7 @@ export default function SrmMessRadar() {
   const [mess, setMess] = useState<MessResponse | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/mess/today")
+    fetch("/api/mess/today")
       .then(res => res.json())
       .then(data => setMess(data))
       .catch(err => console.error(err));

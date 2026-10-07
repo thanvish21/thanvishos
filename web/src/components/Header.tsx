@@ -32,7 +32,7 @@ export default function Header() {
   const [schedule, setSchedule] = useState<ScheduleData | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/schedule/today")
+    fetch("/api/schedule/today")
       .then((res) => res.json())
       .then((data) => {
         setSchedule(data);

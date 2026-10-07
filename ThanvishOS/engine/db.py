@@ -17,8 +17,77 @@ SQLITE_DB_PATH = DATA_DIR / "thanvishos.db"
 
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{SQLITE_DB_PATH}")
 
+IS_POSTGRES = DATABASE_URL.startswith("postgres://") or DATABASE_URL.startswith("postgresql://")
+
+if IS_POSTGRES:
+    try:
+        import psycopg2
+        import psycopg2.extras
+    except ImportError:
+        IS_POSTGRES = False
+
+class PostgresCursorWrapper:
+    """Wraps psycopg2 cursor to provide sqlite3-like parameter binding and dict access."""
+    def __init__(self, cursor):
+        self._cursor = cursor
+
+    def execute(self, query: str, params: Optional[Tuple[Any, ...]] = None):
+        # Translate SQLite ? placeholders to Postgres %s placeholders
+        pg_query = query.replace("?", "%s")
+        # Handle SQLite-specific keywords for Postgres DDL
+        pg_query = pg_query.replace("INTEGER PRIMARY KEY AUTOINCREMENT", "SERIAL PRIMARY KEY")
+        pg_query = pg_query.replace("BOOLEAN DEFAULT 1", "BOOLEAN DEFAULT TRUE")
+        pg_query = pg_query.replace("BOOLEAN DEFAULT 0", "BOOLEAN DEFAULT FALSE")
+        pg_query = pg_query.replace("datetime('now')", "NOW()")
+        pg_query = pg_query.replace("date('now')", "CURRENT_DATE")
+
+        if params is not None:
+            return self._cursor.execute(pg_query, params)
+        return self._cursor.execute(pg_query)
+
+    def executemany(self, query: str, params_seq):
+        pg_query = query.replace("?", "%s")
+        return self._cursor.executemany(pg_query, params_seq)
+
+    def fetchone(self):
+        return self._cursor.fetchone()
+
+    def fetchall(self):
+        return self._cursor.fetchall()
+
+    def __iter__(self):
+        return iter(self._cursor)
+
+    @property
+    def rowcount(self):
+        return self._cursor.rowcount
+
+    def close(self):
+        return self._cursor.close()
+
+class PostgresConnectionWrapper:
+    """Wraps psycopg2 connection to mirror sqlite3 API."""
+    def __init__(self, conn):
+        self._conn = conn
+
+    def cursor(self):
+        return PostgresCursorWrapper(self._conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor))
+
+    def commit(self):
+        return self._conn.commit()
+
+    def rollback(self):
+        return self._conn.rollback()
+
+    def close(self):
+        return self._conn.close()
+
 def get_connection():
-    """Returns a connection to the SQLite database with row factory enabled."""
+    """Returns a connection to either PostgreSQL or SQLite depending on DATABASE_URL."""
+    if IS_POSTGRES:
+        conn = psycopg2.connect(DATABASE_URL)
+        return PostgresConnectionWrapper(conn)
+
     conn = sqlite3.connect(str(SQLITE_DB_PATH))
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
@@ -47,7 +116,7 @@ def init_db():
         code TEXT PRIMARY KEY,
         title TEXT NOT NULL,
         credits INTEGER DEFAULT 3,
-        course_type TEXT NOT NULL, -- THEORY, LAB, INTEGRATED
+        course_type TEXT NOT NULL,
         mandatory BOOLEAN DEFAULT 1,
         created_at TEXT NOT NULL
     )
@@ -57,11 +126,11 @@ def init_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS course_schedule (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        day_order TEXT NOT NULL, -- DO1, DO2, DO3, DO4, DO5
-        period TEXT NOT NULL, -- P1 to P12
+        day_order TEXT NOT NULL,
+        period TEXT NOT NULL,
         time_slot TEXT NOT NULL,
         course_code TEXT,
-        activity_type TEXT NOT NULL, -- CLASS, LAB, NSS, BREAK, FREE
+        activity_type TEXT NOT NULL,
         notes TEXT,
         FOREIGN KEY (course_code) REFERENCES courses(code)
     )
@@ -70,8 +139,8 @@ def init_db():
     # 4. Day Orders & Academic Calendar
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS academic_calendar (
-        date TEXT PRIMARY KEY, -- YYYY-MM-DD
-        day_order TEXT NOT NULL, -- DO1..DO5 or HOLIDAY
+        date TEXT PRIMARY KEY,
+        day_order TEXT NOT NULL,
         is_working BOOLEAN NOT NULL,
         holiday_reason TEXT,
         notes TEXT
@@ -83,9 +152,9 @@ def init_db():
     CREATE TABLE IF NOT EXISTS nss_occurrences (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         date TEXT NOT NULL UNIQUE,
-        assigned_batch TEXT NOT NULL, -- A (P1+P2) or B (P3+P4)
-        status TEXT NOT NULL, -- ATTENDED, UPCOMING, CANCELLED
-        source TEXT NOT NULL, -- USER_CONFIRMED, FACULTY_ANNOUNCED, DEFAULT_INFERRED
+        assigned_batch TEXT NOT NULL,
+        status TEXT NOT NULL,
+        source TEXT NOT NULL,
         updated_at TEXT NOT NULL
     )
     """)
@@ -107,9 +176,9 @@ def init_db():
         classes_attended INTEGER DEFAULT 0,
         classes_missed INTEGER DEFAULT 0,
         percentage REAL DEFAULT 0.0,
-        risk_status TEXT NOT NULL, -- NOT_CONNECTED, SAFE, WATCH, RISK, CRITICAL
+        risk_status TEXT NOT NULL,
         last_sync TEXT,
-        source TEXT NOT NULL, -- PORTAL_SYNC, MANUAL_INPUT, NOT_CONNECTED
+        source TEXT NOT NULL,
         FOREIGN KEY (course_code) REFERENCES courses(code)
     )
     """)
@@ -130,13 +199,13 @@ def init_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS exams (
         id TEXT PRIMARY KEY,
-        exam_category TEXT NOT NULL, -- CT1, CT2, SEMESTER, LAB_PRACTICAL
+        exam_category TEXT NOT NULL,
         course_code TEXT NOT NULL,
         subject_name TEXT NOT NULL,
-        exam_date TEXT, -- YYYY-MM-DD or NULL if date not provided
+        exam_date TEXT,
         start_time TEXT,
         end_time TEXT,
-        status TEXT NOT NULL, -- SCHEDULED, COMPLETED, DATE_NOT_PROVIDED
+        status TEXT NOT NULL,
         syllabus_status TEXT,
         preparation_percent INTEGER DEFAULT 0,
         FOREIGN KEY (course_code) REFERENCES courses(code)
@@ -147,7 +216,7 @@ def init_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS portal_sync_state (
         id TEXT PRIMARY KEY,
-        status TEXT NOT NULL, -- NOT_CONNECTED, CONNECTED, SYNCING, FAILED
+        status TEXT NOT NULL,
         last_attempt TEXT,
         last_successful_sync TEXT,
         error_message TEXT,
@@ -158,7 +227,7 @@ def init_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS portal_events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        event_type TEXT NOT NULL, -- ATTENDANCE_CHANGE, MARK_UPDATE, EXAM_DATE_CHANGE, TIMETABLE_NOTICE
+        event_type TEXT NOT NULL,
         title TEXT NOT NULL,
         details TEXT NOT NULL,
         detected_at TEXT NOT NULL,
@@ -170,15 +239,15 @@ def init_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS mess_sync_state (
         id TEXT PRIMARY KEY,
-        status TEXT NOT NULL, -- NOT_CONNECTED, SYNCED, AWAITING_MENU
+        status TEXT NOT NULL,
         last_sync TEXT,
-        source_type TEXT -- PORTAL, PDF_UPLOAD, MANUAL, NOT_PROVIDED
+        source_type TEXT
     )
     """)
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS mess_menu (
-        date TEXT PRIMARY KEY, -- YYYY-MM-DD
+        date TEXT PRIMARY KEY,
         breakfast TEXT,
         breakfast_timings TEXT,
         lunch TEXT,
@@ -195,7 +264,7 @@ def init_db():
     # 10. Daily Plans & Tasks
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS daily_plans (
-        date TEXT PRIMARY KEY, -- YYYY-MM-DD
+        date TEXT PRIMARY KEY,
         day_order TEXT NOT NULL,
         plan_summary TEXT NOT NULL,
         academic_priority TEXT NOT NULL,
@@ -214,11 +283,11 @@ def init_db():
     CREATE TABLE IF NOT EXISTS tasks (
         id TEXT PRIMARY KEY,
         title TEXT NOT NULL,
-        category TEXT NOT NULL, -- ACADEMIC, CODING, DSA, PROJECT, CAREER, LIFE
-        status TEXT NOT NULL, -- PLANNED, READY, IN_PROGRESS, DONE, SKIPPED, RESCHEDULED
+        category TEXT NOT NULL,
+        status TEXT NOT NULL,
         estimated_minutes INTEGER DEFAULT 30,
         due_date TEXT,
-        priority TEXT NOT NULL, -- LOW, MEDIUM, HIGH, CRITICAL
+        priority TEXT NOT NULL,
         reason TEXT,
         created_at TEXT NOT NULL,
         completed_at TEXT
@@ -230,7 +299,7 @@ def init_db():
     CREATE TABLE IF NOT EXISTS skills (
         skill_id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
-        role TEXT NOT NULL, -- PRIMARY_DEEP, SECONDARY, MAINTENANCE, EXPLORATION, PARKING
+        role TEXT NOT NULL,
         progress_percent INTEGER DEFAULT 0,
         color_class TEXT,
         target_hours INTEGER DEFAULT 100,
@@ -244,7 +313,7 @@ def init_db():
     CREATE TABLE IF NOT EXISTS test_questions (
         id TEXT PRIMARY KEY,
         topic TEXT NOT NULL,
-        level INTEGER NOT NULL, -- 1, 2, 3
+        level INTEGER NOT NULL,
         level_name TEXT NOT NULL,
         question_format TEXT NOT NULL,
         question_text TEXT NOT NULL,
@@ -279,7 +348,7 @@ def init_db():
         evidence TEXT,
         identified_date TEXT NOT NULL,
         retest_date TEXT NOT NULL,
-        status TEXT NOT NULL, -- ACTIVE, RETESTED, RESOLVED
+        status TEXT NOT NULL,
         resolved_at TEXT
     )
     """)
@@ -288,7 +357,7 @@ def init_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS brain_dumps (
         id TEXT PRIMARY KEY,
-        content_type TEXT NOT NULL, -- EXAM_SCHEDULE, NOTE, DOCUMENT_PDF, CODE_SNIPPET, LEARNING_GOAL
+        content_type TEXT NOT NULL,
         title TEXT,
         raw_content TEXT,
         file_path TEXT,
@@ -303,7 +372,7 @@ def init_db():
         agent_id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         role TEXT NOT NULL,
-        status TEXT NOT NULL, -- ONLINE, RUNNING, IDLE, FAILED, OFFLINE, SYNCING
+        status TEXT NOT NULL,
         avatar TEXT NOT NULL,
         color TEXT NOT NULL,
         current_task TEXT,
@@ -322,7 +391,7 @@ def init_db():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         agent_id TEXT NOT NULL,
         task_name TEXT NOT NULL,
-        status TEXT NOT NULL, -- SUCCESS, FAILED, RUNNING
+        status TEXT NOT NULL,
         started_at TEXT NOT NULL,
         finished_at TEXT,
         details TEXT,
@@ -336,7 +405,7 @@ def init_db():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         component TEXT NOT NULL,
         check_name TEXT NOT NULL,
-        status TEXT NOT NULL, -- PASS, FAIL, WARNING
+        status TEXT NOT NULL,
         evidence TEXT NOT NULL,
         verified_at TEXT NOT NULL
     )

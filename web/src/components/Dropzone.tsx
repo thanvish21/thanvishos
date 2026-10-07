@@ -21,7 +21,7 @@ export default function Dropzone() {
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   const fetchRecent = () => {
-    fetch("http://localhost:8000/api/dump/recent")
+    fetch("/api/dump/recent")
       .then((res) => res.json())
       .then((data) => {
         if (data.history) setRecentDumps(data.history);
@@ -63,7 +63,7 @@ export default function Dropzone() {
     setStatusMessage(null);
 
     try {
-      const res = await fetch("http://localhost:8000/api/dump/text", {
+      const res = await fetch("/api/dump/text", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content, title: title.trim() || undefined }),
@@ -92,7 +92,7 @@ export default function Dropzone() {
     formData.append("file", file);
 
     try {
-      await fetch("http://localhost:8000/api/dump/file", {
+      await fetch("/api/dump/file", {
         method: "POST",
         body: formData,
       });

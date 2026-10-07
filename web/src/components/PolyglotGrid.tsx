@@ -24,7 +24,7 @@ export default function PolyglotGrid() {
   const [data, setData] = useState<PolyglotData | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/polyglot/status")
+    fetch("/api/polyglot/status")
       .then((res) => res.json())
       .then((resData) => setData(resData))
       .catch(() => {

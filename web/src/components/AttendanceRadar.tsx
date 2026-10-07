@@ -34,7 +34,7 @@ export default function AttendanceRadar() {
 
   const fetchSummary = () => {
     setLoading(true);
-    fetch("http://localhost:8000/api/attendance/summary")
+    fetch("/api/attendance/summary")
       .then(res => res.json())
       .then(data => {
         setSummary(data);
@@ -55,7 +55,7 @@ export default function AttendanceRadar() {
 
   const handleSimulate = (course: string, miss: number, attend: number) => {
     if (!course) return;
-    fetch("http://localhost:8000/api/attendance/what-if", {
+    fetch("/api/attendance/what-if", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ course_code: course, miss_count: miss, attend_count: attend })

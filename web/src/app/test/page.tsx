@@ -66,24 +66,20 @@ export default function AdaptiveTestPage() {
 
   const handleSubmit = async () => {
     setSubmitting(true);
-    setTimeout(() => {
-      setResult({
-        overall_score: 82,
-        scores: {
-          "Conceptual Understanding": "95%",
-          "Practical & Coding Ability": "80%",
-          "Debugging": "65%",
-          "Critical Thinking & Transfer": "88%"
-        },
-        strongest_area: "Conceptual Depth",
-        weakest_area: "Debugging & Edge Cases",
-        weaknesses_identified: [
-          { topic: "Calculus: Critical Points & Optimization", issue: "Missed checking boundary conditions [a,b] for absolute extrema", retest_in_days: 2 }
-        ],
-        next_action: "Mathematics CT1 revision on formulas & derivatives before tomorrow's exam."
+    try {
+      const res = await fetch("http://localhost:8000/api/test/evaluate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ answers })
       });
+      const data = await res.json();
+      setResult(data);
+    } catch (err) {
+      console.error(err);
+      // Fallback or error handling
+    } finally {
       setSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (

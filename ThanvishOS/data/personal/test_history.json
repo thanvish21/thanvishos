@@ -1,5 +1,311 @@
 [
   {
+    "date": "2026-10-08T01:58:38.540979",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 25,
+    "scores": {
+      "conceptual": 40,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Linear Algebra: Determinants & Invertibility",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  },
+  {
+    "date": "2026-10-08T01:58:14.402431",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 25,
+    "scores": {
+      "conceptual": 40,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Linear Algebra: Determinants & Invertibility",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  },
+  {
+    "date": "2026-10-08T01:58:10.363059",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 27,
+    "scores": {
+      "conceptual": 50,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Calculus: Limits & Continuity",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  },
+  {
+    "date": "2026-10-08T01:56:19.958598",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 27,
+    "scores": {
+      "conceptual": 50,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Calculus: Limits & Continuity",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  },
+  {
+    "date": "2026-10-08T01:51:07.162956",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 27,
+    "scores": {
+      "conceptual": 50,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Calculus: Limits & Continuity",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  },
+  {
+    "date": "2026-10-08T01:49:51.465442",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 27,
+    "scores": {
+      "conceptual": 50,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Calculus: Limits & Continuity",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  },
+  {
+    "date": "2026-10-08T01:49:43.527425",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 27,
+    "scores": {
+      "conceptual": 50,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Calculus: Limits & Continuity",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  },
+  {
+    "date": "2026-10-08T01:49:31.238514",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 27,
+    "scores": {
+      "conceptual": 50,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Calculus: Limits & Continuity",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  },
+  {
+    "date": "2026-10-08T01:49:22.282224",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 27,
+    "scores": {
+      "conceptual": 50,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Calculus: Limits & Continuity",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  },
+  {
     "date": "2026-10-08T01:22:57.431338",
     "topic": "Calculus & Mathematics CT1",
     "overall": 20,

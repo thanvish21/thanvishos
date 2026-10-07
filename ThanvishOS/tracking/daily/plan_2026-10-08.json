@@ -1,0 +1,258 @@
+{
+  "date_info": {
+    "date": "2026-10-08",
+    "weekday": "Thursday",
+    "day_order": "DO3",
+    "is_working": true,
+    "power_day": true
+  },
+  "schedule": {
+    "periods": [
+      {
+        "period": "P1",
+        "time": "08:00\u201308:50",
+        "subject": "FREE / Morning Coding",
+        "type": "FREE"
+      },
+      {
+        "period": "P2",
+        "time": "08:50\u201309:40",
+        "subject": "FREE / Morning Coding",
+        "type": "FREE"
+      },
+      {
+        "period": "P3",
+        "time": "09:45\u201310:35",
+        "subject": "FREE / Buffer",
+        "type": "FREE"
+      },
+      {
+        "period": "P4",
+        "time": "10:40\u201311:30",
+        "subject": "Calculus & Linear Algebra (26MAB1001T)",
+        "type": "CLASS"
+      },
+      {
+        "period": "P5",
+        "time": "11:35\u201312:25",
+        "subject": "Chemistry (26CYB1002J)",
+        "type": "CLASS"
+      },
+      {
+        "period": "P6",
+        "time": "12:30\u201301:20",
+        "subject": "\ud83c\udf89 Done for the day! Prime Power Slot",
+        "type": "FREE"
+      },
+      {
+        "period": "P7",
+        "time": "01:25\u201302:15",
+        "subject": "FREE \u2014 Deep Engineering & Projects",
+        "type": "FREE"
+      },
+      {
+        "period": "P8",
+        "time": "02:20\u201303:10",
+        "subject": "FREE \u2014 Deep Engineering & Projects",
+        "type": "FREE"
+      },
+      {
+        "period": "P9",
+        "time": "03:10\u201304:00",
+        "subject": "FREE \u2014 Deep Engineering & Projects",
+        "type": "FREE"
+      },
+      {
+        "period": "P10",
+        "time": "04:00\u201304:50",
+        "subject": "FREE",
+        "type": "FREE"
+      },
+      {
+        "period": "P11",
+        "time": "04:50\u201305:30",
+        "subject": "FREE",
+        "type": "FREE"
+      },
+      {
+        "period": "P12",
+        "time": "05:30\u201306:10",
+        "subject": "FREE",
+        "type": "FREE"
+      }
+    ],
+    "nss_block": "A"
+  },
+  "exams": {
+    "ct1_upcoming": [
+      {
+        "id": "CT1_26MAB1001T_2026-10-09",
+        "exam_category": "CT1",
+        "course_code": "26MAB1001T",
+        "subject_name": "Calculus and Linear Algebra (Mathematics)",
+        "exam_date": "2026-10-09",
+        "start_time": "12:30 PM",
+        "end_time": "02:10 PM",
+        "status": "SCHEDULED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      },
+      {
+        "id": "CT1_26CSE1002J_2026-10-12",
+        "exam_category": "CT1",
+        "course_code": "26CSE1002J",
+        "subject_name": "Programming for Problem Solving",
+        "exam_date": "2026-10-12",
+        "start_time": "08:00 AM",
+        "end_time": "09:40 AM",
+        "status": "SCHEDULED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      },
+      {
+        "id": "CT1_26LCA1005J_2026-10-13",
+        "exam_category": "CT1",
+        "course_code": "26LCA1005J",
+        "subject_name": "Foreign Language (Japanese)",
+        "exam_date": "2026-10-13",
+        "start_time": "09:45 AM",
+        "end_time": "11:35 AM",
+        "status": "SCHEDULED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      },
+      {
+        "id": "CT1_26BTB1001T_2026-10-14",
+        "exam_category": "CT1",
+        "course_code": "26BTB1001T",
+        "subject_name": "Introduction to Computational Biology",
+        "exam_date": "2026-10-14",
+        "start_time": "02:20 PM",
+        "end_time": "04:00 PM",
+        "status": "SCHEDULED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      }
+    ],
+    "semester_upcoming": [
+      {
+        "id": "SEM_26MEE1001L",
+        "exam_category": "SEMESTER",
+        "course_code": "26MEE1001L",
+        "subject_name": "Workshop Practice",
+        "exam_date": null,
+        "start_time": null,
+        "end_time": null,
+        "status": "DATE_NOT_PROVIDED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      },
+      {
+        "id": "SEM_26GNN1004L",
+        "exam_category": "SEMESTER",
+        "course_code": "26GNN1004L",
+        "subject_name": "National Service Scheme",
+        "exam_date": null,
+        "start_time": null,
+        "end_time": null,
+        "status": "DATE_NOT_PROVIDED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      },
+      {
+        "id": "SEM_26CSE1002J",
+        "exam_category": "SEMESTER",
+        "course_code": "26CSE1002J",
+        "subject_name": "Programming for Problem Solving",
+        "exam_date": "2026-12-14",
+        "start_time": "10:00",
+        "end_time": "13:00",
+        "status": "SCHEDULED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      },
+      {
+        "id": "SEM_26LCA1005J",
+        "exam_category": "SEMESTER",
+        "course_code": "26LCA1005J",
+        "subject_name": "Japanese",
+        "exam_date": "2026-12-15",
+        "start_time": "10:00",
+        "end_time": "13:00",
+        "status": "SCHEDULED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      },
+      {
+        "id": "SEM_26BTB1001T",
+        "exam_category": "SEMESTER",
+        "course_code": "26BTB1001T",
+        "subject_name": "Introduction to Computational Biology",
+        "exam_date": "2026-12-16",
+        "start_time": "10:00",
+        "end_time": "13:00",
+        "status": "SCHEDULED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      },
+      {
+        "id": "SEM_26CYB1002J",
+        "exam_category": "SEMESTER",
+        "course_code": "26CYB1002J",
+        "subject_name": "Chemistry for Computer Science",
+        "exam_date": "2026-12-17",
+        "start_time": "10:00",
+        "end_time": "13:00",
+        "status": "SCHEDULED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      },
+      {
+        "id": "SEM_26MAB1001T",
+        "exam_category": "SEMESTER",
+        "course_code": "26MAB1001T",
+        "subject_name": "Calculus and Linear Algebra",
+        "exam_date": "2026-12-19",
+        "start_time": "10:00",
+        "end_time": "13:00",
+        "status": "SCHEDULED",
+        "syllabus_status": null,
+        "preparation_percent": 0
+      }
+    ],
+    "urgent_exam": {
+      "id": "CT1_26MAB1001T_2026-10-09",
+      "exam_category": "CT1",
+      "course_code": "26MAB1001T",
+      "subject_name": "Calculus and Linear Algebra (Mathematics)",
+      "exam_date": "2026-10-09",
+      "start_time": "12:30 PM",
+      "end_time": "02:10 PM",
+      "status": "SCHEDULED",
+      "syllabus_status": null,
+      "preparation_percent": 0
+    },
+    "days_to_urgent_exam": 1
+  },
+  "attendance": {
+    "summary": "1 courses at risk",
+    "risks": [
+      {
+        "course_code": "26MAB1001T",
+        "classes_conducted": 20,
+        "classes_attended": 15,
+        "classes_missed": 5,
+        "percentage": 75.0,
+        "risk_status": "RISK",
+        "last_sync": "2026-10-08T01:48:47.382586",
+        "source": "PORTAL_SYNC"
+      }
+    ]
+  },
+  "learning_goal": "Primary: Python (AI & CompBio) - Deep Dive | Secondary: C/C++ (Systems & DSA) - Maintenance",
+  "building_goal": "ThanvishOS v4.0 - Today Command Center & Database Integration",
+  "testing_goal": "3-Level Adaptive Test: Calculus & Mathematics CT1",
+  "what_not_to_do": "Do not jump into Rust exploration or unrelated side projects tonight with Calculus and Linear Algebra (Mathematics) CT1 tomorrow.",
+  "why_these_priorities": "Tomorrow is a critical CT1 exam for Calculus and Linear Algebra (Mathematics). Focus must be strictly on revision, test practice, and getting adequate rest.",
+  "free_time_windows": "Afternoon Power Window (12:30 PM onwards) + Evening wind-down (9:30 PM - 10:30 PM)"
+}

@@ -80,6 +80,11 @@ def main():
     game_parser = subparsers.add_parser("game", help="Launch a learning game")
     game_parser.add_argument("name", help="Name of the game to launch")
 
+    # web dashboard
+    web_parser = subparsers.add_parser("web", help="Launch ThanvishOS Web Hub & Local Daemon")
+    web_parser.add_argument("--port", type=int, default=3000, help="Web interface port (default: 3000)")
+    web_parser.add_argument("--api-port", type=int, default=8000, help="API daemon port (default: 8000)")
+
     args = parser.parse_args()
 
     # Dispatch to the appropriate engine module
@@ -121,6 +126,30 @@ def main():
     elif args.command == "game":
         Engine = load_engine("ThanvishOS.engine.game")
         Engine(CONFIG).run(args)
+    elif args.command == "web":
+        import subprocess
+        import time
+        print(f"🚀 Starting ThanvishOS Backend Daemon on port {args.api_port}...")
+        api_proc = subprocess.Popen(
+            [sys.executable, "-m", "uvicorn", "ThanvishOS.server:app", "--host", "0.0.0.0", "--port", str(args.api_port)],
+            cwd=Path(__file__).parent
+        )
+        print(f"🚀 Starting ThanvishOS Web Hub on port {args.port}...")
+        web_proc = subprocess.Popen(
+            ["npm", "run", "dev", "--", "-p", str(args.port)],
+            cwd=Path(__file__).parent / "web"
+        )
+        try:
+            print("\n✅ ThanvishOS is live! Press Ctrl+C to shut down.")
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            print("\nShutting down ThanvishOS...")
+            api_proc.terminate()
+            web_proc.terminate()
+            api_proc.wait()
+            web_proc.wait()
+            sys.exit(0)
     else:
         parser.error(f"Unsupported command: {args.command}")
 

@@ -1,0 +1,41 @@
+[
+  {
+    "date": "2026-10-08T01:22:57.431338",
+    "topic": "Calculus & Mathematics CT1",
+    "overall": 20,
+    "scores": {
+      "conceptual": 15,
+      "coding": 0,
+      "debugging": 0,
+      "interview": 85,
+      "critical_thinking": 0
+    },
+    "weaknesses": [
+      {
+        "topic": "Calculus: Limits & Continuity",
+        "issue": "Unanswered Level 1 \u2014 Concept + Foundation",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Linear Algebra: Determinants & Invertibility",
+        "issue": "Failed MCQ on Linear Algebra: Determinants & Invertibility",
+        "retest_in_days": 2
+      },
+      {
+        "topic": "Calculus: Chain Rule & Gradient",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus: Critical Points & Optimization",
+        "issue": "Unanswered Level 2 \u2014 Engineering & Problem Solving",
+        "retest_in_days": 1
+      },
+      {
+        "topic": "Calculus & ML Transfer: Gradient Descent",
+        "issue": "Unanswered Level 3 \u2014 Critical Thinking & Transfer",
+        "retest_in_days": 1
+      }
+    ]
+  }
+]

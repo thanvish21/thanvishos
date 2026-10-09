@@ -1,181 +1,148 @@
 ---
 title: Interview Prep Session — 2026-10-08
 date: 2026-10-08
-tags: [interview-prep, coding, exam-alert, mathematics, DO3]
+tags: [interview-prep, coding, exam-alert, mathematics, DO3, bioinformatics]
 status: draft
 ---
 
 # 🎯 Evening Interview Prep — 2026-10-08
 
 ```
-DATE: 2026-10-08 | DAY: Thursday | DO: DO3 | SESSION MODE: ⚠️ PRE-EXAM OVERRIDE → 20 min warm-up only
+DATE: 2026-10-08 | DAY: Thursday | DO: DO3 | SESSION MODE: 20 min (Pre-Exam Mode)
 ```
 
 ---
 
 ## ⚠️ EXAM ALERT
+**Mathematics exam on Oct 9 at 12:30–02:10 PM. Prioritize revision tonight.**
 
-**Mathematics CT1 is TOMORROW — Oct 9 at 12:30–02:10 PM**
-
-Session is reduced to **1 easy coding warm-up (20 min)** to keep your mind sharp without draining mental energy. Spend the remaining time on Mathematics revision (Calculus, limits, derivatives, integration — whatever your CT1 covers).
-
----
-
-## Company of the Day (DO3 Rotation — noted for future full session)
-🏢 **Google / Microsoft India**
-*(Full deep-dive deferred to next DO3 day without an exam conflict)*
+Because your CT1 Mathematics exam is tomorrow, tonight's interview prep is scaled down to a **20-minute minimum warm-up**. Behavioral and System Design sections are skipped. Guard your mental energy and pivot immediately to calculus and matrices after this!
 
 ---
 
-## 🧩 Coding Problem — Easy Warm-Up (20 min)
+## 🏢 Company of the Day (DO3 Rotation)
+**Google / Microsoft India**
+*(Full interview deep-dive deferred to your next DO3 day due to tomorrow's exam.)*
 
-### Problem: Two Sum
-**Difficulty:** Easy | **Topic:** Arrays, Hashing | **Time target:** 15 min
+---
+
+## 🧩 Coding Problem — Easy Warm-Up (Bio+CS Twist)
+
+### Problem: Counting Point Mutations (Hamming Distance)
+**Difficulty:** Easy | **Topic:** Strings, Counting | **Time target:** 15 min
 
 **Problem Statement:**
-Given an array of integers `nums` and a target integer `target`, return the indices of the two numbers that add up to `target`. You may assume exactly one solution exists, and you may not use the same element twice.
+Given two DNA strings `s` and `t` of equal length, return the Hamming distance between them. The Hamming distance is the number of corresponding symbols that differ in `s` and `t`. This represents the minimum number of point mutations required to change one DNA sequence into the other.
 
 **Constraints:**
-- 2 ≤ nums.length ≤ 10⁴
-- -10⁹ ≤ nums[i] ≤ 10⁹
-- -10⁹ ≤ target ≤ 10⁹
+- 1 ≤ s.length = t.length ≤ 1000
+- `s` and `t` consist only of characters `'A'`, `'C'`, `'G'`, and `'T'`.
 
 **Examples:**
 ```
-Input:  nums = [2, 7, 11, 15], target = 9   → Output: [0, 1]
-Input:  nums = [3, 2, 4],      target = 6   → Output: [1, 2]
-Input:  nums = [],             target = 0   → Edge: empty array → []   (constraint says len≥2, but good to note)
+Input:  s = "GAGCCTACTAACGGGAT", t = "CATCGTAATGACGGCCT"
+Output: 7
+
+Input:  s = "A", t = "A"
+Output: 0
+
+Input:  s = "", t = ""  (Edge case: empty strings)
+Output: 0
 ```
 
 ---
 
 ### 💡 Hints (try before reading)
-1. Can you solve it in O(n²) first? Two nested loops checking every pair.
-2. Think about what you need to find for each element — it's `target - nums[i]`. Where can you store things you've already seen?
-3. A hash map (dictionary) lets you look up in O(1). Store `value → index` as you iterate.
+1. You only need to compare characters at the exact same index in both strings.
+2. A single loop iterating from `0` to `length - 1` is sufficient.
+3. Keep a counter variable. Increment it whenever `s[i] != t[i]`.
 
 ---
 
-### 🐢 Brute Force
-```python
-def two_sum_brute(nums, target):
-    for i in range(len(nums)):
-        for j in range(i + 1, len(nums)):
-            if nums[i] + nums[j] == target:
-                return [i, j]
-    return []
-```
-**Time:** O(n²) | **Space:** O(1)
+### 🐢 Brute Force & ⚡ Optimal Solution
 
----
-
-### ⚡ Optimal Solution
+For this problem, the brute force approach of checking each character index-by-index is also the optimal approach.
 
 **Python:**
 ```python
-def two_sum(nums: list[int], target: int) -> list[int]:
-    seen: dict[int, int] = {}          # value → index
-    for i, num in enumerate(nums):
-        complement = target - num
-        if complement in seen:
-            return [seen[complement], i]
-        seen[num] = i
-    return []                          # guaranteed solution exists per problem
+def hamming_distance(s: str, t: str) -> int:
+    mutations = 0
+    for i in range(len(s)):
+        if s[i] != t[i]:
+            mutations += 1
+    return mutations
 
+# Pythonic optimal one-liner using zip:
+def hamming_distance_pythonic(s: str, t: str) -> int:
+    return sum(1 for a, b in zip(s, t) if a != b)
 
 # Test
-print(two_sum([2, 7, 11, 15], 9))   # [0, 1]
-print(two_sum([3, 2, 4], 6))        # [1, 2]
-print(two_sum([3, 3], 6))           # [0, 1]  ← duplicate values edge case
+print(hamming_distance("GAGCCTACTAACGGGAT", "CATCGTAATGACGGCCT"))  # 7
 ```
 
 **JavaScript:**
 ```javascript
-function twoSum(nums, target) {
-    const seen = new Map();  // value → index
-    for (let i = 0; i < nums.length; i++) {
-        const complement = target - nums[i];
-        if (seen.has(complement)) {
-            return [seen.get(complement), i];
+function hammingDistance(s, t) {
+    let mutations = 0;
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] !== t[i]) {
+            mutations++;
         }
-        seen.set(nums[i], i);
     }
-    return [];
+    return mutations;
 }
 
 // Test
-console.log(twoSum([2, 7, 11, 15], 9));  // [0, 1]
-console.log(twoSum([3, 2, 4], 6));       // [1, 2]
+console.log(hammingDistance("GAGCCTACTAACGGGAT", "CATCGTAATGACGGCCT"));  // 7
 ```
 
-**Time:** O(n) | **Space:** O(n)
+**Time Complexity:** O(n) where n is the length of the string. We visit each character exactly once.
+**Space Complexity:** O(1) as we only use a single counter variable.
 
 ---
 
 ### 🔍 Explanation
-For each element, compute `complement = target - current`. If `complement` is already in the hash map, we found our pair — return both indices. Otherwise, store `current → index` for future lookups. We never need to look backward manually; the map handles it.
+We iterate through both sequences simultaneously. At each position `i`, we check if the nucleotide in sequence `s` differs from the nucleotide in sequence `t`. If they are different, we have found a point mutation and increment our counter. 
 
 ### ❌ Common Mistakes
-- Returning values instead of indices
-- Putting `nums[i]` in the map BEFORE checking complement (causes same-element reuse with `[3,3]→6` incorrectly)
-- Forgetting 0-indexed output
+- Trying to split the string into arrays first (unnecessary memory overhead, Strings are iterable/indexable).
+- Forgetting to handle edge cases like empty strings (though constraints often guarantee length ≥ 1).
+- Overcomplicating with maps or sets—order matters here!
 
 ### 🔁 Follow-Up Questions
-1. What if there are multiple valid answers? (Return all pairs)
-2. What if the array is sorted? (Use two-pointer — O(1) space!)
-3. Three Sum variant: find three numbers summing to 0.
-
----
-
-## 📚 Tonight's Priority: Mathematics CT1 Revision
-
-**Spend the remaining evening on:**
-- [ ] Limits and continuity (ε-δ, standard limits)
-- [ ] Differentiation rules (chain, product, quotient)
-- [ ] Integration techniques (substitution, by parts)
-- [ ] Sequences and series if covered
-- [ ] Past CT1 practice questions / formula sheet review
-
-**Exam details:** Oct 9 (Friday) | DO4 | 12:30–02:10 PM
-*(You have morning classes before the exam — DO4: Chemistry P1–P2, Calculus P6–P7 — so prepare tonight, not tomorrow morning)*
+1. How would you handle strings of *unequal* length? (Requires sequence alignment like Needleman-Wunsch / Levenshtein distance—much harder!)
+2. Can you optimize this if the strings were massive (e.g., millions of base pairs)? (Process in chunks, potentially multithreading or using bitwise operations if encoded compactly).
 
 ---
 
 ## 🧮 Self-Score Checklist
 
 ```
-📅 2026-10-08 | DO3 | PRE-EXAM 20 min | 🎯 Mathematics CT1 eve
+📅 2026-10-08 | DO3 | 20 min (Pre-Exam Mode) | 🎯 Google / Microsoft India
 CODING /6:
   [ ] Understood the problem without hints
-  [ ] Coded brute force correctly
-  [ ] Coded optimal solution (hash map)
-  [ ] Handled edge cases (duplicates, negatives)
+  [ ] Coded optimal solution
+  [ ] Handled edge cases
   [ ] Within 15 min time limit
   [ ] Explained complexity correctly
-
-BEHAVIORAL /4: (skipped — pre-exam mode)
-SYSTEM DESIGN /4: (skipped — pre-exam mode)
-
-Maths Revision:
-  [ ] Completed formula review
-  [ ] Practised ≥3 past questions
-  [ ] Confident on exam topics
+  [ ] Considered Bio+CS follow-up twist
 ```
 
 ---
 
-## 👀 Tomorrow's Preview
-
-**Oct 9, 2026 → DO4 | HEAVY | CT1 Mathematics Exam Day**
-
-- Morning: Chemistry (P1–P2), then Calculus (P6–P7), Chemistry (P8), PPS (P9), Calculus (P10) — ends 4:50 PM
-- Exam: 12:30–02:10 PM Mathematics CT1
-- Evening prep: 45-min session after exam (if energy allows) | Company: **Flipkart / Amazon India**
+## 📚 Tonight's True Priority: Math CT1 Revision
+Spend the rest of the night reviewing:
+- Calculus fundamentals (limits, continuity, derivatives, integration).
+- Any matrices or sequences topics covered in your syllabus.
+- **Do not pull an all-nighter.** You have morning classes tomorrow before the 12:30 PM exam.
 
 ---
 
+## 👀 Tomorrow's Preview
+**Date:** 2026-10-09
+**DO:** DO4 (Heavy)
+**Session Length:** 45 min
+**Company:** Flipkart / Amazon India
+
 ## 💪 Closing Note
-
-Thanvish, you're running a rare combination — computational biology instincts sharpened by real CS depth. Most freshers cramming for MNCs have neither. Crush the Maths CT1 tomorrow, then come back for the full Google deep-dive on the next DO3. The interview prep will compound — tonight, protect your exam performance.
-
-**शुभकामनाएँ (Shubhakaamanaayen) for tomorrow! 🎯**
+Thanvish, your unique blend of Computational Biology and strict CS fundamentals gives you an edge few candidates have. Protect your GPA tomorrow—crush that Mathematics CT1, and we'll pick up the heavy engineering prep once the exam is behind you. Good luck!
